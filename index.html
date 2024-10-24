@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart ContentBot</title>
+</head>
+<body>
+    <h1>Smart ContentBot</h1>
+
+    <!-- PDF Upload and Summarization Form -->
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="pdf">Upload PDF:</label>
+        <input type="file" name="pdf" id="pdf" accept="application/pdf" required>
+        <button type="submit">Summarize</button>
+    </form>
+
+    {% if summary %}
+        <h2>Summary:</h2>
+        <p>{{ summary }}</p>
+    {% endif %}
+
+    {% if document %}
+        <!-- Bookmark Form -->
+        <h2>Add Bookmark</h2>
+        <form method="POST" action="{% url 'bookmark' document.id %}">
+            {% csrf_token %}
+            <input type="text" name="description" placeholder="Bookmark description" required>
+            <input type="number" name="page_number" placeholder="Page number" required>
+            <button type="submit">Add Bookmark</button>
+        </form>
+    {% endif %}
+</body>
+</html>
